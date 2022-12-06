@@ -51,7 +51,7 @@ func TestSystem(t *testing.T) {
 	if err != nil {
 		t.Fatalf("unable to read response body: %v", err)
 	}
-	wantBody := "Hello World!\n"
+	wantBody := "Hello World, and welcome to Caption Search!\n"
 	if string(gotBody) != wantBody {
 		t.Fatalf("resp.Body = %q, want %q", gotBody, wantBody)
 	}
