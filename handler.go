@@ -17,6 +17,7 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"log"
 	"net/http"
 
 	"cloud.google.com/go/logging"
@@ -25,12 +26,21 @@ import (
 )
 
 func (a *App) Handler(w http.ResponseWriter, r *http.Request) {
+	query := r.URL.Query()
+	params, present := query["q"]
+	var queryString string
+	if !present || len(params) == 0 {
+		queryString = "N/A"
+	} else {
+		queryString = params[0]
+		log.Printf("hello query parameter %s", queryString)
+	}
 	a.log.Log(logging.Entry{
 		Severity: logging.Info,
 		HTTPRequest: &logging.HTTPRequest{
 			Request: r,
 		},
-		Labels:  map[string]string{"arbitraryField": "custom entry"},
+		Labels:  map[string]string{"query": queryString},
 		Payload: "Structured logging example.",
 	})
 	fmt.Fprintf(w, "Hello World, and welcome to Caption Search!\n")
