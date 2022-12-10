@@ -24,8 +24,8 @@ import (
 	"time"
 
 	"cloud.google.com/go/logging"
-	"example.com/micro/metadata"
 	"github.com/gorilla/mux"
+	"github.com/jerrutledge/caption-search-go-api/metadata"
 	"google.golang.org/api/option"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
@@ -104,8 +104,8 @@ func newApp(ctx context.Context, port, projectID string) (*App, error) {
 
 	// Setup request router.
 	r := mux.NewRouter()
-	r.HandleFunc("/", app.Handler).
-		Methods("GET")
+	r.HandleFunc("/hello", app.Handler).Methods("GET")
+	r.HandleFunc("/search", app.SearchLogHandler).Methods("GET")
 	app.Server.Handler = r
 
 	return app, nil
