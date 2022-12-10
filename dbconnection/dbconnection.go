@@ -16,8 +16,8 @@ import (
 func Connect() (*mongo.Collection, error) {
 	uri := os.Getenv("MONGODB_URI")
 	if uri == "" {
-		log.Printf("'MONGODB_URI' %s", "not found")
-		log.Fatal("You must set your 'MONGODB_URI' environmental variable. See\n\t https://www.mongodb.com/docs/drivers/go/current/usage-examples/#environment-variable")
+		log.Println("You must set your 'MONGODB_URI' environmental variable. See\n\t https://www.mongodb.com/docs/drivers/go/current/usage-examples/#environment-variable")
+		return nil, mongo.CommandError{}
 	}
 	client, err := mongo.Connect(context.TODO(), options.Client().ApplyURI(uri))
 	if err != nil {
